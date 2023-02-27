@@ -1,6 +1,26 @@
 import sequelize from "../config/sequelize";
 import { DataTypes } from "sequelize";
 
+export interface UserSchema{
+  id?: number,
+  name?:string,
+  email?:string,
+  password?:string,
+  photo?:string,
+  role?:string,
+  posts?:number,
+  follower?:number,
+  following?:number,
+  bio?:string,
+  links?:string,
+  isAdmin?:boolean,
+  isActive?:boolean,
+  createdAt?:Date,
+  updatedAt?:Date,
+  save(): unknown,
+  destroy():unknown
+}
+
 const User = sequelize.define('user', {
   id: {
     type: DataTypes.INTEGER,
@@ -47,7 +67,7 @@ const User = sequelize.define('user', {
       notNull:{
         msg: 'Please insert the image'
       }
-    }
+    },
   },
   role:{
     type: DataTypes.STRING,
@@ -72,6 +92,29 @@ const User = sequelize.define('user', {
     type: DataTypes.BOOLEAN,
     allowNull:false,
     defaultValue:true
+  },
+  bio:{
+    type: DataTypes.STRING,
+    defaultValue:''
+  },
+  links:{
+    type: DataTypes.STRING,
+    defaultValue:''
+  },
+  posts:{
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull:false
+  },
+  follower:{
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+    allowNull:false,
+  },
+  following:{
+    type: DataTypes.INTEGER,
+    defaultValue:0,
+    allowNull:false,
   }
 }, {timestamps:true})
 
