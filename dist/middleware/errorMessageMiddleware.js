@@ -19,8 +19,8 @@ const errorMiddleware = (err, req, res, next) => {
         const message = Object.values(error.errors).map((val) => val.message);
         error = new customError_1.default(`${message}`, 400);
     }
-    const statusCode = err.statusCode || 500;
-    const message = err.message || 'Interval Server Error';
+    const statusCode = error.statusCode || 500;
+    const message = error.message || 'Interval Server Error';
     res.status(statusCode).json({
         success: false,
         message,

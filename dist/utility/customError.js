@@ -5,5 +5,8 @@ class ResponseError extends Error {
         super(message);
         this.statusCode = statusCode;
     }
+    static initialError() {
+        return 'error';
+    }
 }
 exports.default = ResponseError;

@@ -51,7 +51,7 @@ const User = sequelize_1.default.define('user', {
             notNull: {
                 msg: 'Please insert the image'
             }
-        }
+        },
     },
     role: {
         type: sequelize_2.DataTypes.STRING,
@@ -76,6 +76,29 @@ const User = sequelize_1.default.define('user', {
         type: sequelize_2.DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true
+    },
+    bio: {
+        type: sequelize_2.DataTypes.STRING,
+        defaultValue: ''
+    },
+    links: {
+        type: sequelize_2.DataTypes.STRING,
+        defaultValue: ''
+    },
+    posts: {
+        type: sequelize_2.DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+    },
+    follower: {
+        type: sequelize_2.DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
+    },
+    following: {
+        type: sequelize_2.DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
     }
 }, { timestamps: true });
 exports.default = User;
