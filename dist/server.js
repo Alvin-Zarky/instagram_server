@@ -52,11 +52,11 @@ app.use((0, express_1.urlencoded)({ extended: false }));
 app.use("/api/instagram/clone/user", userRoute_1.default);
 app.use("/api/instagram/clone/post", postRoute_1.default);
 app.use("/api/instagram/clone/chat", chatRoute_1.default);
-app.use("*", (req, res, next) => {
-    res
-        .status(404)
-        .send(`Cloud not be found with this url site~ ${req.originalUrl}`);
-});
+// app.use("*", (req: Request, res: Response, next: NextFunction) => {
+//   res
+//     .status(404)
+//     .send(`Cloud not be found with this url site~ ${req.originalUrl}`);
+// });
 app.use(errorMessageMiddleware_1.default);
 Post_1.default.belongsTo(User_1.default, { constraints: true, onDelete: "CASCADE" });
 Chat_1.default.belongsTo(User_1.default, { constraints: true, onDelete: "CASCADE" });
