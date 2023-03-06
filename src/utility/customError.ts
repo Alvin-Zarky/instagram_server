@@ -7,6 +7,10 @@ class ResponseError extends Error{
     this.statusCode= statusCode
   }
 
+  static initialError(){
+    return 'error';
+  }
+  
 }
 
 export default ResponseError

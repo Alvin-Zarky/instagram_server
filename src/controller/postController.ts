@@ -9,7 +9,7 @@ const getAllPostData: RequestHandler = asyncHandler(async(req, res, next) =>{
 
   const page= Number(req.query.page) || 1
   const limit= Number(req.query.limit) || 1
-  const startPage= (page - 1) * limit
+  const startPage = (page - 1) * limit
 
   const data= await Post.findAll({ limit, order:[['createdAt', 'DESC']], include: [{ model: User, attributes:['id','name','email','photo'] }] })
 
