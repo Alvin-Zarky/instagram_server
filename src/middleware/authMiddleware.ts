@@ -2,20 +2,11 @@ import jsonwebtoken from "jsonwebtoken"
 import asyncHandler from "express-async-handler"
 import {config} from "dotenv"
 import ResponseError from "../utility/customError"
-import User, { UserSchema } from "../model/User"
+import User from "../model/User"
+import { UserSchema } from "../types/user"
+import { Decoded } from "../types/auth"
 
 config()
-
-declare global{
-  namespace Express{
-    interface Request{
-      user: UserSchema
-    }
-  }
-}
-interface Decoded{
-  id: string  
-}
 
 const authTokenMiddleware = asyncHandler(async (req, res, next) =>{
   

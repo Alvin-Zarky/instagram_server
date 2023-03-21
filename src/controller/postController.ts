@@ -1,7 +1,8 @@
 import asyncHandler from "express-async-handler"
 import { RequestHandler } from "express"
 import ResponseError from "../utility/customError"
-import Post, { PostSchema } from "../model/Post"
+import Post from "../model/Post"
+import { PostSchema } from "../types/post"
 import User from "../model/User"
 import { io } from "../server"
 

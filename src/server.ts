@@ -33,11 +33,11 @@ app.use("/api/instagram/clone/user", userRoute);
 app.use("/api/instagram/clone/post", postRoute);
 app.use("/api/instagram/clone/chat", chatRoute)
 
-// app.use("*", (req: Request, res: Response, next: NextFunction) => {
-//   res
-//     .status(404)
-//     .send(`Cloud not be found with this url site~ ${req.originalUrl}`);
-// });
+app.use("*", (req: Request, res: Response, next: NextFunction) => {
+  res
+    .status(404)
+    .send(`Cloud not be found with this url site~ ${req.originalUrl}`);
+});
 
 app.use(errorMiddleware);
 

@@ -1,26 +1,6 @@
 import sequelize from "../config/sequelize";
 import { DataTypes } from "sequelize";
 
-export interface User{
-  id?:number,
-  name?:string,
-  email?:string,
-  comment?:string
-}
-export interface PostSchema{
-  id?:number,
-  userId?:number,
-  text?:string,
-  media?:string[],
-  likes?: User[],
-  comments?: User[],
-  tags?:string[],
-  createdAt?:Date,
-  updatedAt?:Date,
-  save():unknown,
-  destroy():unknown
-}
-
 const Post= sequelize.define('post', {
   id:{
     type: DataTypes.INTEGER,

@@ -1,6 +1,7 @@
 import expressAsyncHandler from "express-async-handler";
 import { RequestHandler } from "express";
-import User, { UserSchema } from "../model/User";
+import User from "../model/User";
+import { UserSchema } from "../types/user";
 import ResponseError from "../utility/customError";
 import validator from "validator";
 import bcryptjs from "bcryptjs";

@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler"
-import Chat, { ChatSchema } from "../model/Chat"
+import Chat from "../model/Chat"
+import { ChatSchema } from "../types/chat"
 import { RequestHandler } from "express"
 import ResponseError from "../utility/customError"
 import User from "../model/User"
