@@ -1,4 +1,4 @@
-import { UserSchema } from "../model/User";
+import { UserSchema } from "../types/user";
 
 const userProperties = (user: UserSchema) => {
   return {
