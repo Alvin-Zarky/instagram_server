@@ -1,5 +1,5 @@
 import sequelize from "../config/sequelize";
-import { DataTypes } from "sequelize";
+import { DataTypes, UUIDV4 } from "sequelize";
 
 const Post= sequelize.define('post', {
   id:{
@@ -8,13 +8,27 @@ const Post= sequelize.define('post', {
     primaryKey:true,
     allowNull:false,
   },
+  postId:{
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4
+  },
   text:{
-    type: DataTypes.TEXT("long"),
+    type: DataTypes.TEXT,
     // allowNull:false,
   },
   media:{
     type: DataTypes.ARRAY(DataTypes.STRING),
     // allowNull:false
+  },
+  mediaDetail:{
+    type: DataTypes.JSON,
+    get:function(){
+      return JSON.parse(this.getDataValue('mediaDetail'))
+    },
+    set:function(val){
+      return this.setDataValue('mediaDetail', JSON.stringify(val))  
+    },
+    defaultValue:[]
   },
   likes:{
     type: DataTypes.JSON,
@@ -33,6 +47,16 @@ const Post= sequelize.define('post', {
     set:function(val){
       return this.setDataValue('comments', JSON.stringify(val))
     }
+  },
+  saveBy:{
+    type: DataTypes.JSON,
+    get:function(){
+      return JSON.parse(this.getDataValue('saveBy'))
+    },
+    set:function(val){
+      return this.setDataValue('saveBy', JSON.stringify(val))  
+    },
+    defaultValue:[]
   },
   tags:{
     type: DataTypes.ARRAY(DataTypes.STRING)

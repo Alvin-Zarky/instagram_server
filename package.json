@@ -19,11 +19,14 @@
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.9.1",
     "pg": "^8.9.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.28.0",
     "socket.io": "^4.6.0",
+    "twilio": "^4.11.1",
     "typescript": "^4.9.5",
     "validator": "^13.9.0"
   },
@@ -34,6 +37,8 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/morgan": "^1.9.4",
     "@types/node": "^18.11.18",
+    "@types/nodemailer": "^6.4.7",
+    "@types/twilio": "^3.19.3",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1"
   }

@@ -8,6 +8,10 @@ const User = sequelize.define('user', {
     primaryKey:true,
     allowNull:false
   },
+  uid:{
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4
+  },
   name:{
     type: DataTypes.STRING,
     allowNull:false,
@@ -40,6 +44,14 @@ const User = sequelize.define('user', {
       },
     }
   },
+  resetPasswordToken:DataTypes.STRING,
+  resetPasswordExpired: DataTypes.DATE,
+  isVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue:false
+  },
+  verifiedToken:DataTypes.STRING,
+  verifiedExpired: DataTypes.DATE,
   photo:{
     type: DataTypes.STRING,
     allowNull:false,
@@ -48,6 +60,15 @@ const User = sequelize.define('user', {
         msg: 'Please insert the image'
       }
     },
+  },
+  photoDetail:{
+    type: DataTypes.JSON,
+    get:function(){
+      return JSON.parse(this.getDataValue('photoDetail'))
+    },
+    set:function(value){
+      return this.setDataValue('photoDetail', JSON.stringify(value))
+    }
   },
   role:{
     type: DataTypes.STRING,
@@ -95,6 +116,11 @@ const User = sequelize.define('user', {
     type: DataTypes.INTEGER,
     defaultValue:0,
     allowNull:false,
+  },
+  isHideLike:{
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull:false
   }
 }, {timestamps:true})
 

@@ -9,3 +9,23 @@ export interface ChatSchema{
   save(): unknown,
   destroy(): unknown
 }
+
+export interface MessageProperties{
+  id?:number,
+  uid?:string,
+  text?:any,
+  uSendText?:string,
+  uRecieveText?:string,
+  createdAt?:Date,
+  updatedAt?:Date,
+  uUser?:UserProperties,
+  user: UserProperties
+}
+
+export interface UserProperties{
+  id:number,
+  uid:string,
+  name: string,
+  email: string,
+  photo:string,
+}
