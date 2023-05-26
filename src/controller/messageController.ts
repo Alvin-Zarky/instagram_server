@@ -8,7 +8,7 @@ import { Op, QueryTypes } from "sequelize";
 import { UserSchema } from "../types/user";
 import { userObjects } from "../helper/userObjectResult";
 import { io } from "../server";
-import { MessageProperties } from "../types/chat";
+import { MessageProperties, ChatUserMessage } from "../types/chat";
 
 const attributes=["id","uid","name","email","photo","isHideLike"]
 const checkUserUid = async (uid: string): Promise<UserSchema> => {
@@ -114,11 +114,29 @@ const deleteUserMessageText: RequestHandler = expressAsyncHandler(
       where: { uid },
       raw: true,
     })) as UserSchema;
+
     if (!user) {
       throw new ResponseError("User uid not found", 404);
     }
 
-    const message = await Message.findOne({
+    // const message = (await Message.findOne({
+    //   where: { uRecieveText: user.id, id },
+      // include: [
+      //   {
+      //     model: User,
+      //     foreignKey: "uSendText",
+      //     as: "uUser",
+      //     attributes
+      //   },
+      //   {
+      //     model: User,
+      //     foreignKey: "uRecieveText",
+      //     as: "user",
+      //     attributes
+      //   },
+      // ],
+    // }));
+    const userMessage= await Message.findOne({
       where: { uRecieveText: user.id, id },
       include: [
         {
@@ -134,19 +152,21 @@ const deleteUserMessageText: RequestHandler = expressAsyncHandler(
           attributes
         },
       ],
-    });
-    if (!message) {
+    }) as unknown as ChatUserMessage
+
+    if (!userMessage) {
       throw new ResponseError("Message user not found", 404);
     }
 
     const value = {
-      ...message.dataValues,
-      text: JSON.parse(message.getDataValue("text")),
+      ...userMessage.dataValues,
+      text: JSON.parse(JSON.stringify(userMessage.text))
+      // text: JSON.parse(userMessage.getDataValue("text")),
     };
     io.emit("message", value);
 
-    await message?.destroy();
-    res.status(204).json({
+    await userMessage.destroy()
+    res.status(200).json({
       success: true,
       data: value,
     });
@@ -163,9 +183,9 @@ const deleteAllUserMessage = expressAsyncHandler(async (req, res, next) => {
       ],
     },
   });
-  if (allChat.length === 0) {
-    throw new ResponseError("All Chat has been deleted", 400);
-  }
+  // if (allChat.length === 0) {
+  //   throw new ResponseError("All Chat has been deleted", 400);
+  // }
 
   io.emit("message", allChat);
   allChat.forEach((val) => val.destroy());

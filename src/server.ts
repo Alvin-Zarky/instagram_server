@@ -70,13 +70,13 @@ Message.belongsTo(User, { foreignKey: 'uRecieveText', as: 'user', constraints:tr
 
 Notification.belongsTo(User, { constraints:true, onDelete: "CASCADE" })
 Notification.belongsTo(Post, {constraints:true, onDelete:"CASCADE"})
-// User.sync({force:true})
+// User.sync({alter:true})
 // Post.sync({alter:true})
 // Message.sync({alter:true})
 // Notification.sync({alter:true, force:true})
 // AuthTesting.sync({alter:true})
 sequelize
-  .sync({ alter: true})
+  .sync({ alter: true })
   .then((url) => {
     console.log(
       colors.green.bold.underline.inverse(
