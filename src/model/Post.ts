@@ -20,6 +20,12 @@ export interface PostSchema{
   save():unknown,
   destroy():unknown
 }
+export interface UserLikePost{
+  id?:number,
+  name?: string,
+  email?: string,
+  photo?: string
+}
 
 const Post= sequelize.define('post', {
   id:{

@@ -65,7 +65,7 @@ const userRegister: RequestHandler = expressAsyncHandler(
       token: generateUserToken(user.id?.toString()!),
     }
 
-    io.emit('user-register', data)
+    // io.emit('user-register', data)
 
     res.status(201).json({
       success: true,

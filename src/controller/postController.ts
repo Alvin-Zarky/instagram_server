@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler"
 import { RequestHandler } from "express"
 import ResponseError from "../utility/customError"
-import Post, { PostSchema } from "../model/Post"
+import Post, { PostSchema, UserLikePost } from "../model/Post"
 import User from "../model/User"
 import { io } from "../server"
 
@@ -67,7 +67,7 @@ const createPostData: RequestHandler = asyncHandler(async(req, res, next) =>{
   })
 
   const data = { ...post.dataValues, comments: JSON.parse(post.getDataValue('comments')), likes: JSON.parse(post.getDataValue('likes')),  user: { id: req.user.id, name: req.user.name, email: req.user.email, photo: req.user.photo } }
-  io.emit('post-data', data)
+  // io.emit('post-data', data)
   
   res.status(201).json({ success:true, data })
 
@@ -97,6 +97,47 @@ const updatePostData: RequestHandler = asyncHandler(async(req, res, next) =>{
 
 })
 
+const updatePostInfo: RequestHandler = asyncHandler(async (req, res, next) => {
+  const { text, media, likes, comments, tags } = req.body;
+
+  const post = (await Post.findByPk(req.params.id, {include: [{
+    model: User,
+    attributes:['id','name','email','photo']
+  }]})) as PostSchema;
+
+  if (!post) {
+    throw new ResponseError("Post not found", 404);
+  }
+
+  post.text = text;
+  post.media = media;
+  post.tags = tags;
+
+  if (likes.length > 0) {
+    const userAlreadyLiked = post.likes?.find(
+      (val: UserLikePost) => val.id === req.user.id
+    );
+    if (!userAlreadyLiked) {
+      post.likes = [...JSON.parse(JSON.stringify(post.likes)), ...likes];
+    } else {
+      const data = post.likes?.filter(
+        (val: UserLikePost) => val.id !== req.user.id
+      );
+      post.likes = data;
+    }
+  }
+
+  if (comments.length > 0) {
+    post.comments = [...JSON.parse(JSON.stringify(post.comments)), ...comments];
+  }
+
+  await post.save();
+
+  // io.emit("update-post", post);
+
+  res.status(200).json({ success: true, data: post });
+});
+
 const deletePostData: RequestHandler = asyncHandler(async(req, res, next) =>{
 
   const post= await Post.findByPk(req.params.id) as PostSchema
@@ -121,4 +162,5 @@ export {
   createPostData,
   updatePostData,
   deletePostData,
+  updatePostInfo,
 }
